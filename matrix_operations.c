@@ -125,3 +125,43 @@ vector_delete(float* vector)
 {
 	free(vector);
 }
+
+void
+matrix_vector_mult(float** matrix,
+				   float* vector,
+				   const int size_N,
+				   float* vector_result)
+{
+	float aux_value = 0.0f;
+
+	for (int row = 0; row < size_N; row++)
+	{
+		aux_value = 0.0f;
+
+#ifdef DEBUG_MODE
+		printf("mult_out[%d] = ", row);
+		for (int col = 0; col < size_N; col++)
+		{
+			printf("(%6.2f * %6.2f)", matrix[row][col], vector[col]);
+			aux_value += (matrix[row][col] * vector[col]);
+
+			if (col < (size_N - 1))
+			{
+				printf(" + ");
+			}
+		}
+		printf(" = %6.2f\n", aux_value);
+#endif
+
+#ifndef DEBUG_MODE
+		for (int col = 0; col < size_N; col++)
+		{
+			aux_value += (matrix[row][col] * vector[col]);
+		}
+#endif
+
+		vector_result[row] = aux_value;
+	}
+	printf("\n");
+}
+

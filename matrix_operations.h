@@ -75,4 +75,17 @@ matrix_delete(float** matrix, const int size_N);
 void
 vector_delete(float* vector);
 
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  matrix_vector_mult
+ *  Description:  Performs multiplication between a matrix(NxN) and
+ *				  vector(Nx1) and returns a vector(Nx1).
+ * =================================================================
+ */
+void
+matrix_vector_mult(float** matrix,
+				   float* vector,
+				   const int size_N,
+				   float* vector_result);
+
 #endif
