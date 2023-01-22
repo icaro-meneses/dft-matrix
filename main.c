@@ -26,12 +26,18 @@ int
 main(void)
 {
 	float** matrix_test;
+	float* vector_test;
 
 	matrix_test = matrix_create(SIZE);
+	vector_test = vector_create(SIZE);
 
 #ifdef DEBUG_MODE
 	print_matrix(matrix_test, SIZE);
+	print_vector(vector_test, SIZE);
 #endif
+
+	matrix_delete(matrix_test, SIZE);
+	vector_delete(vector_test);
 
 	return 0;
 }

@@ -49,19 +49,79 @@ matrix_create(const int size_N)
 		}
 	}
 
+	for (int row = 0; row < size_N; row++)
+	{
+		for (int col = 0; col < size_N; col++)
+		{
+			matrix_output_ptr[row][col] = 0.0f;
+		}
+	}
+
 	return matrix_output_ptr;
+}
+
+float*
+vector_create(const int size_N)
+{
+	float* vector_output_ptr;
+
+	vector_output_ptr = (float*)malloc(size_N * sizeof(float));
+
+	if (vector_output_ptr == NULL)
+	{
+		printf("Error in memory allocation for %s vector.\n",
+			   "vector_output_ptr");
+		exit(EXIT_FAILURE);
+	}
+
+	for (int item = 0; item < size_N; item++)
+	{
+		vector_output_ptr[item] = 0.0f;
+	}
+
+	return vector_output_ptr;
 }
 
 void
 print_matrix(float** matrix, const int size_N)
 {
+	printf("Square matrix (%d x %d):\n", size_N, size_N);
 	for (int row = 0; row < size_N; row++)
 	{
 		for (int col = 0; col < size_N; col++)
 		{
-			printf("%6.2f ", matrix[row][col]);
+			printf("\t%6.2f ", matrix[row][col]);
 		}
 		printf("\n");
 	}
 	printf("\n\n");
+}
+
+void
+print_vector(float* vector, const int size_N)
+{
+	printf("Column vector (%d x 1) represented as row vector:\n",
+		   size_N);
+	for (int item = 0; item < size_N; item++)
+	{
+		printf("\t%6.2f ", vector[item]);
+	}
+	printf("\n\n");
+}
+
+void
+matrix_delete(float** matrix, const int size_N)
+{
+	for (int row = 0; row < size_N; row++)
+	{
+		free(matrix[row]);
+	}
+
+	free(matrix);
+}
+
+void
+vector_delete(float* vector)
+{
+	free(vector);
 }

@@ -32,11 +32,47 @@ matrix_create(const int size_N);
 
 /*
  * ===  FUNCTION  ==================================================
+ *         Name:  vector_create
+ *  Description:  Create a (Nx1) matrix defined by size.
+ * =================================================================
+ */
+float*
+vector_create(const int size_N);
+
+/*
+ * ===  FUNCTION  ==================================================
  *         Name:  print_matrix
  *  Description:  Print the (NxN) matrix in stdout.
  * =================================================================
  */
 void
 print_matrix(float** matrix, const int size_N);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  print_vector
+ *  Description:  Print the (Nx1) vector in stdout.
+ * =================================================================
+ */
+void
+print_vector(float* vector, const int size_N);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  matrix_delete
+ *  Description:  Free the memory allocated in matrix
+ * =================================================================
+ */
+void
+matrix_delete(float** matrix, const int size_N);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  matrix_delete
+ *  Description:  Free the memory allocated in vector
+ * =================================================================
+ */
+void
+vector_delete(float* vector);
 
 #endif
