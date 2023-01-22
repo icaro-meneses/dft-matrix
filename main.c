@@ -18,11 +18,20 @@
  */
 
 #include <stdio.h>
+#include "matrix_operations.h"
+
+#define SIZE 4
 
 int
 main(void)
 {
-	printf("DFT\n\n");
+	float** matrix_test;
+
+	matrix_test = matrix_create(SIZE);
+
+#ifdef DEBUG_MODE
+	print_matrix(matrix_test, SIZE);
+#endif
 
 	return 0;
 }
