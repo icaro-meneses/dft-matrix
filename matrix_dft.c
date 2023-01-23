@@ -30,10 +30,12 @@ fill_wn_matrix(float complex** matrix, const int size_N)
 	/* In the martix of coefficients, k represents the rows and
 	 * n represents the columns */
 	for (int k = 0; k < size_N; k++)
+	// for (int n = 0; n < size_N; n++)
 	{
 		for (int n = 0; n < size_N; n++)
+		// for (int k = 0; k < size_N; k++)
 		{
-			matrix[k][n] = cexpf((-I * TWO_PI * k * n) / size_N);
+			matrix[n][k] = cexpf((-I * TWO_PI * k * n) / size_N);
 		}
 	}
 }
@@ -73,7 +75,6 @@ get_dft_freqs(float* freq_array,
 
 	i	= middle;
 	aux = (-1) * (window_length / 2);
-	printf("aux: %d\n", aux);
 	while (aux < 0)
 	{
 		freq_array[i] = aux;
@@ -88,3 +89,54 @@ get_dft_freqs(float* freq_array,
 			(float)freq_array[i] / (window_length * sample_spacing);
 	}
 }
+
+float complex*
+dft_calc(float complex* signal,
+		 const int dft_size,
+		 const int signal_size)
+{
+	float complex** coef_wn_matrix;
+	float complex* xn_vector;
+	float complex* result_dft;
+
+	coef_wn_matrix = matrix_create_cpx(dft_size);
+	xn_vector	   = vector_create_cpx(dft_size);
+	result_dft	   = vector_create_cpx(dft_size);
+
+	fill_wn_matrix(coef_wn_matrix, dft_size);
+	fill_x_vector(xn_vector, signal, dft_size, signal_size);
+
+#ifdef DEBUG_MODE
+	printf("Coefficents matrix:\n");
+	print_matrix_cpx(coef_wn_matrix, dft_size);
+
+	printf("X(n) vector:\n");
+	print_vector_cpx(xn_vector, dft_size);
+#endif
+
+	matrix_vector_mult_cpx(coef_wn_matrix,
+						   xn_vector,
+						   dft_size,
+						   result_dft);
+
+	matrix_delete_cpx(coef_wn_matrix, dft_size);
+	vector_delete_cpx(xn_vector);
+
+	return result_dft;
+}
+
+float*
+abs_dft_calc(float complex* dft, const int dft_size)
+{
+	float* dft_abs_output;
+
+	dft_abs_output = vector_create(dft_size);
+
+	for (int item = 0; item < dft_size; item++)
+	{
+		dft_abs_output[item] = cabsf(dft[item]);
+	}
+
+	return dft_abs_output;
+}
+

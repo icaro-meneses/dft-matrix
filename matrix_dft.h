@@ -49,9 +49,38 @@ fill_x_vector(float complex* dtf_vector,
 			  const int dft_vector_size,
 			  const int signal_size);
 
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  get_dft_freqs
+ *  Description:  Fill a array with the DFT sample frequencies
+ * ==================================================================
+ */
 void
 get_dft_freqs(float* freq_array,
 			  const int window_length,
 			  const float sample_spacing);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  dft_calc
+ *  Description:  Performs the Discrete Fourier Transform of a
+ *				  sampled signal as input and returns a vector
+ *				  with the complex values of DFT.
+ * =================================================================
+ */
+float complex*
+dft_calc(float complex* signal,
+		 const int dft_size,
+		 const int signal_size);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  abs_dft_calc
+ *  Description:  Calculates the magnitude(absolute value) of
+ *				  a previous calculated DFT.
+ * =================================================================
+ */
+float*
+abs_dft_calc(float complex* dft, const int dft_size);
 
 #endif
