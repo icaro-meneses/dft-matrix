@@ -22,6 +22,7 @@
 #include <complex.h>
 #include "matrix_operations.h"
 #include "matrix_dft.h"
+#include "out_file.h"
 
 #define DFT_SIZE 8
 
@@ -66,6 +67,11 @@ main(void)
 	print_vector(dft_abs, DFT_SIZE);
 	printf("\nInverse DFT Output (Complex Form):\n");
 	print_vector_cpx(inv_dft_output, DFT_SIZE);
+
+	printf("Outputting the data files...\n");
+	output_data("dft_freqs.txt", dft_freqs, DFT_SIZE);
+	output_data_cpx("dft_out.txt", dft_output, DFT_SIZE);
+	output_data("dft_abs.txt", dft_abs, DFT_SIZE);
 
 	vector_delete_cpx(signal_example);
 	vector_delete_cpx(dft_output);

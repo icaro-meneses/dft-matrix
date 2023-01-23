@@ -2,3 +2,5 @@
 *.o
 *.x
 .vim
+*.txt
+results/
