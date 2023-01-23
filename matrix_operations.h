@@ -21,13 +21,15 @@
 #ifndef MAT_OP_LIB_H
 #define MAT_OP_LIB_H
 
+#include <complex.h>
+
 /*
  * ===  FUNCTION  ==================================================
  *         Name:  matrix_create
  *  Description:  Create a (NxN) matrix defined by size.
  * =================================================================
  */
-float**
+float complex**
 matrix_create(const int size_N);
 
 /*
@@ -36,7 +38,7 @@ matrix_create(const int size_N);
  *  Description:  Create a (Nx1) matrix defined by size.
  * =================================================================
  */
-float*
+float complex*
 vector_create(const int size_N);
 
 /*
@@ -46,7 +48,7 @@ vector_create(const int size_N);
  * =================================================================
  */
 void
-print_matrix(float** matrix, const int size_N);
+print_matrix(float complex** matrix, const int size_N);
 
 /*
  * ===  FUNCTION  ==================================================
@@ -55,7 +57,7 @@ print_matrix(float** matrix, const int size_N);
  * =================================================================
  */
 void
-print_vector(float* vector, const int size_N);
+print_vector(float complex* vector, const int size_N);
 
 /*
  * ===  FUNCTION  ==================================================
@@ -64,7 +66,7 @@ print_vector(float* vector, const int size_N);
  * =================================================================
  */
 void
-matrix_delete(float** matrix, const int size_N);
+matrix_delete(float complex** matrix, const int size_N);
 
 /*
  * ===  FUNCTION  ==================================================
@@ -73,7 +75,7 @@ matrix_delete(float** matrix, const int size_N);
  * =================================================================
  */
 void
-vector_delete(float* vector);
+vector_delete(float complex* vector);
 
 /*
  * ===  FUNCTION  ==================================================
@@ -83,9 +85,9 @@ vector_delete(float* vector);
  * =================================================================
  */
 void
-matrix_vector_mult(float** matrix,
-				   float* vector,
+matrix_vector_mult(float complex** matrix,
+				   float complex* vector,
 				   const int size_N,
-				   float* vector_result);
+				   float complex* vector_result);
 
 #endif

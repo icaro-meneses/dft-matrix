@@ -20,9 +20,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <complex.h>
 #include "matrix_operations.h"
 
-#define SIZE  5
+#define SIZE  3
 
 #define UPPER 5
 #define LOWER -5
@@ -30,9 +31,9 @@
 int
 main(void)
 {
-	float** matrix_test;
-	float* vector_test;
-	float* vector_mult;
+	float complex** matrix_test;
+	float complex* vector_test;
+	float complex* vector_mult;
 
 	srand((unsigned int)time(NULL));
 
@@ -45,13 +46,16 @@ main(void)
 		for (int col = 0; col < SIZE; col++)
 		{
 			matrix_test[row][col] =
-				(rand() % (UPPER - LOWER + 1)) + LOWER;
+				((rand() % (UPPER - LOWER + 1)) + LOWER) +
+				((rand() % (UPPER - LOWER + 1)) + LOWER) * I;
 		}
 	}
 
 	for (int item = 0; item < SIZE; item++)
 	{
-		vector_test[item] = (rand() % (UPPER - LOWER + 1)) + LOWER;
+		vector_test[item] =
+			((rand() % (UPPER - LOWER + 1)) + LOWER) +
+			((rand() % (UPPER - LOWER + 1)) + LOWER) * I;
 	}
 
 	print_matrix(matrix_test, SIZE);

@@ -18,15 +18,17 @@
  */
 
 #include "matrix_operations.h"
+#include <complex.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-float**
+float complex**
 matrix_create(const int size_N)
 {
-	float** matrix_output_ptr;
+	float complex** matrix_output_ptr;
 
-	matrix_output_ptr = (float**)malloc(size_N * sizeof(float*));
+	matrix_output_ptr =
+		(float complex**)malloc(size_N * sizeof(float complex*));
 
 	if (matrix_output_ptr == NULL)
 	{
@@ -38,7 +40,7 @@ matrix_create(const int size_N)
 	for (int row = 0; row < size_N; row++)
 	{
 		matrix_output_ptr[row] =
-			(float*)malloc(size_N * sizeof(float));
+			(float complex*)malloc(size_N * sizeof(float complex));
 
 		if (matrix_output_ptr[row] == NULL)
 		{
@@ -53,19 +55,20 @@ matrix_create(const int size_N)
 	{
 		for (int col = 0; col < size_N; col++)
 		{
-			matrix_output_ptr[row][col] = 0.0f;
+			matrix_output_ptr[row][col] = 0.0f + 0.0f * I;
 		}
 	}
 
 	return matrix_output_ptr;
 }
 
-float*
+float complex*
 vector_create(const int size_N)
 {
-	float* vector_output_ptr;
+	float complex* vector_output_ptr;
 
-	vector_output_ptr = (float*)malloc(size_N * sizeof(float));
+	vector_output_ptr =
+		(float complex*)malloc(size_N * sizeof(float complex));
 
 	if (vector_output_ptr == NULL)
 	{
@@ -76,21 +79,23 @@ vector_create(const int size_N)
 
 	for (int item = 0; item < size_N; item++)
 	{
-		vector_output_ptr[item] = 0.0f;
+		vector_output_ptr[item] = 0.0f + 0.0f * I;
 	}
 
 	return vector_output_ptr;
 }
 
 void
-print_matrix(float** matrix, const int size_N)
+print_matrix(float complex** matrix, const int size_N)
 {
 	printf("Square matrix (%d x %d):\n", size_N, size_N);
 	for (int row = 0; row < size_N; row++)
 	{
 		for (int col = 0; col < size_N; col++)
 		{
-			printf("\t%6.2f ", matrix[row][col]);
+			printf("\t(%6.2f + %6.2fj) ",
+				   creal(matrix[row][col]),
+				   cimag(matrix[row][col]));
 		}
 		printf("\n");
 	}
@@ -98,19 +103,21 @@ print_matrix(float** matrix, const int size_N)
 }
 
 void
-print_vector(float* vector, const int size_N)
+print_vector(float complex* vector, const int size_N)
 {
 	printf("Column vector (%d x 1) represented as row vector:\n",
 		   size_N);
 	for (int item = 0; item < size_N; item++)
 	{
-		printf("\t%6.2f ", vector[item]);
+		printf("\t(%6.2f + %6.2fj) ",
+			   creal(vector[item]),
+			   cimag(vector[item]));
 	}
 	printf("\n\n");
 }
 
 void
-matrix_delete(float** matrix, const int size_N)
+matrix_delete(float complex** matrix, const int size_N)
 {
 	for (int row = 0; row < size_N; row++)
 	{
@@ -121,28 +128,32 @@ matrix_delete(float** matrix, const int size_N)
 }
 
 void
-vector_delete(float* vector)
+vector_delete(float complex* vector)
 {
 	free(vector);
 }
 
 void
-matrix_vector_mult(float** matrix,
-				   float* vector,
+matrix_vector_mult(float complex** matrix,
+				   float complex* vector,
 				   const int size_N,
-				   float* vector_result)
+				   float complex* vector_result)
 {
-	float aux_value = 0.0f;
+	float complex aux_value = 0.0f + 0.0f * I;
 
 	for (int row = 0; row < size_N; row++)
 	{
-		aux_value = 0.0f;
+		aux_value = 0.0f + 0.0f * I;
 
 #ifdef DEBUG_MODE
 		printf("mult_out[%d] = ", row);
 		for (int col = 0; col < size_N; col++)
 		{
-			printf("(%6.2f * %6.2f)", matrix[row][col], vector[col]);
+			printf("[%6.2f + (%6.2f)j] * [%6.2f + (%6.2f)j]",
+				   creal(matrix[row][col]),
+				   cimag(matrix[row][col]),
+				   creal(vector[col]),
+				   cimag(vector[col]));
 			aux_value += (matrix[row][col] * vector[col]);
 
 			if (col < (size_N - 1))
@@ -150,7 +161,9 @@ matrix_vector_mult(float** matrix,
 				printf(" + ");
 			}
 		}
-		printf(" = %6.2f\n", aux_value);
+		printf(" = %6.2f + (%6.2f)j\n",
+			   creal(aux_value),
+			   cimag(aux_value));
 #endif
 
 #ifndef DEBUG_MODE
