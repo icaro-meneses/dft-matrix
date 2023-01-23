@@ -24,6 +24,7 @@
 #include "matrix_dft.h"
 #include "out_file.h"
 
+#define SIG_SIZE 32
 #define DFT_SIZE 32
 
 int
@@ -45,7 +46,7 @@ main(void)
 
 	freq_A = 1000.0f;
 	freq_B = 2000.0f;
-	for (int n = 0; n < DFT_SIZE; n++)
+	for (int n = 0; n < SIG_SIZE; n++)
 	{
 		signal_example[n] =
 			csinf(TWO_PI * freq_A * n * sample_period) +
@@ -53,12 +54,12 @@ main(void)
 						 ((3.0f * PI) / 4.0f));
 	}
 
-	dft_output	   = dft_calc(signal_example, DFT_SIZE, DFT_SIZE);
+	dft_output	   = dft_calc(signal_example, DFT_SIZE, SIG_SIZE);
 	dft_abs		   = abs_dft_calc(dft_output, DFT_SIZE);
 	inv_dft_output = inv_dft_calc(dft_output, DFT_SIZE);
 
 	printf("Signal Example (Complex Form):\n");
-	print_vector_cpx(signal_example, DFT_SIZE);
+	print_vector_cpx(signal_example, SIG_SIZE);
 	printf("DFT Freqs:\n");
 	print_vector(dft_freqs, DFT_SIZE);
 	printf("DFT Output (Complex Form):\n");
@@ -66,14 +67,14 @@ main(void)
 	printf("DFT Output (Magnitude):\n");
 	print_vector(dft_abs, DFT_SIZE);
 	printf("\nInverse DFT Output (Complex Form):\n");
-	print_vector_cpx(inv_dft_output, DFT_SIZE);
+	print_vector_cpx(inv_dft_output, SIG_SIZE);
 
 	printf("Outputting the data files...\n");
-	output_data_cpx("input_signal.txt", signal_example, DFT_SIZE);
+	output_data_cpx("input_signal.txt", signal_example, SIG_SIZE);
 	output_data("dft_freqs.txt", dft_freqs, DFT_SIZE);
 	output_data_cpx("dft_out.txt", dft_output, DFT_SIZE);
 	output_data("dft_abs.txt", dft_abs, DFT_SIZE);
-	output_data_cpx("inv_dft.txt", inv_dft_output, DFT_SIZE);
+	output_data_cpx("inv_dft.txt", inv_dft_output, SIG_SIZE);
 
 	vector_delete_cpx(signal_example);
 	vector_delete_cpx(dft_output);
