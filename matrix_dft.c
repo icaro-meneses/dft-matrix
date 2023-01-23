@@ -23,19 +23,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <complex.h>
+#include <stdbool.h>
 
 void
-fill_wn_matrix(float complex** matrix, const int size_N)
+fill_wn_matrix(float complex** matrix,
+			   const int size_N,
+			   bool inv_dft_mode)
 {
-	/* In the martix of coefficients, k represents the rows and
-	 * n represents the columns */
-	for (int k = 0; k < size_N; k++)
-	// for (int n = 0; n < size_N; n++)
+	/* If the mode is DFT */
+	if (!inv_dft_mode)
 	{
-		for (int n = 0; n < size_N; n++)
-		// for (int k = 0; k < size_N; k++)
+		/* In the martix of coefficients, k represents the rows and
+		 * n represents the columns */
+		for (int k = 0; k < size_N; k++)
+		// for (int n = 0; n < size_N; n++)
 		{
-			matrix[n][k] = cexpf((-I * TWO_PI * k * n) / size_N);
+			for (int n = 0; n < size_N; n++)
+			// for (int k = 0; k < size_N; k++)
+			{
+				matrix[n][k] = cexpf((-I * TWO_PI * k * n) / size_N);
+			}
+		}
+	}
+
+	/* If the mode is Inverse DFT */
+	else
+	{
+		/* In the martix of coefficients, k represents the rows and
+		 * n represents the columns */
+		for (int k = 0; k < size_N; k++)
+		{
+			for (int n = 0; n < size_N; n++)
+			{
+				matrix[k][n] = (1.0f / size_N) *
+							   cexpf((I * TWO_PI * k * n) / size_N);
+			}
 		}
 	}
 }
@@ -103,7 +125,7 @@ dft_calc(float complex* signal,
 	xn_vector	   = vector_create_cpx(dft_size);
 	result_dft	   = vector_create_cpx(dft_size);
 
-	fill_wn_matrix(coef_wn_matrix, dft_size);
+	fill_wn_matrix(coef_wn_matrix, dft_size, false);
 	fill_x_vector(xn_vector, signal, dft_size, signal_size);
 
 #ifdef DEBUG_MODE
@@ -140,3 +162,27 @@ abs_dft_calc(float complex* dft, const int dft_size)
 	return dft_abs_output;
 }
 
+float complex*
+inv_dft_calc(float complex* dft, const int dft_size)
+{
+	float complex** coef_wn_matrix;
+	float complex* xn_vector;
+	float complex* result_inv_dft;
+
+	coef_wn_matrix = matrix_create_cpx(dft_size);
+	xn_vector	   = vector_create_cpx(dft_size);
+	result_inv_dft = vector_create_cpx(dft_size);
+
+	fill_wn_matrix(coef_wn_matrix, dft_size, true);
+	fill_x_vector(xn_vector, dft, dft_size, dft_size);
+
+	matrix_vector_mult_cpx(coef_wn_matrix,
+						   xn_vector,
+						   dft_size,
+						   result_inv_dft);
+
+	matrix_delete_cpx(coef_wn_matrix, dft_size);
+	vector_delete_cpx(xn_vector);
+
+	return result_inv_dft;
+}

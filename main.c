@@ -30,6 +30,7 @@ main(void)
 {
 	float complex* signal_example;
 	float complex* dft_output;
+	float complex* inv_dft_output;
 	float* dft_freqs;
 	float* dft_abs;
 
@@ -51,20 +52,26 @@ main(void)
 						 ((3.0f * PI) / 4.0f));
 	}
 
-	dft_output = dft_calc(signal_example, DFT_SIZE, DFT_SIZE);
-	dft_abs	   = abs_dft_calc(dft_output, DFT_SIZE);
+	dft_output	   = dft_calc(signal_example, DFT_SIZE, DFT_SIZE);
+	dft_abs		   = abs_dft_calc(dft_output, DFT_SIZE);
+	inv_dft_output = inv_dft_calc(dft_output, DFT_SIZE);
 
+	printf("Signal Example (Complex Form):\n");
+	print_vector_cpx(signal_example, DFT_SIZE);
 	printf("DFT Freqs:\n");
 	print_vector(dft_freqs, DFT_SIZE);
 	printf("DFT Output (Complex Form):\n");
 	print_vector_cpx(dft_output, DFT_SIZE);
 	printf("DFT Output (Magnitude):\n");
 	print_vector(dft_abs, DFT_SIZE);
+	printf("\nInverse DFT Output (Complex Form):\n");
+	print_vector_cpx(inv_dft_output, DFT_SIZE);
 
 	vector_delete_cpx(signal_example);
 	vector_delete_cpx(dft_output);
 	vector_delete(dft_freqs);
 	vector_delete(dft_abs);
+	vector_delete_cpx(inv_dft_output);
 
 	return 0;
 }

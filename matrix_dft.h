@@ -22,6 +22,7 @@
 #define MATRIX_DFT_LIB_H
 
 #include <complex.h>
+#include <stdbool.h>
 
 #define PI	   3.141592653589793f
 #define TWO_PI (2.0 * PI)
@@ -34,7 +35,9 @@
  * =================================================================
  */
 void
-fill_wn_matrix(float complex** matrix, const int size_N);
+fill_wn_matrix(float complex** matrix,
+			   const int size_N,
+			   bool inv_dft_mode);
 
 /*
  * ===  FUNCTION  ==================================================
@@ -82,5 +85,16 @@ dft_calc(float complex* signal,
  */
 float*
 abs_dft_calc(float complex* dft, const int dft_size);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  inv_dft_calc
+ *  Description:  Performs the Inverse Discrete Fourier Transform
+ *				  of a DFT input and returns a vector with the
+ *				  complex values of IDFT.
+ * =================================================================
+ */
+float complex*
+inv_dft_calc(float complex* dft, const int dft_size);
 
 #endif
