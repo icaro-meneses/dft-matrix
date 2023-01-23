@@ -24,7 +24,7 @@
 #include "matrix_dft.h"
 #include "out_file.h"
 
-#define DFT_SIZE 8
+#define DFT_SIZE 32
 
 int
 main(void)
@@ -36,7 +36,7 @@ main(void)
 	float* dft_abs;
 
 	float freq_A, freq_B;
-	float sample_frequency = 8000.0f;
+	float sample_frequency = 16.0e3f;
 	float sample_period	   = 1.0f / sample_frequency;
 
 	signal_example		   = vector_create_cpx(DFT_SIZE);
@@ -69,9 +69,11 @@ main(void)
 	print_vector_cpx(inv_dft_output, DFT_SIZE);
 
 	printf("Outputting the data files...\n");
+	output_data_cpx("input_signal.txt", signal_example, DFT_SIZE);
 	output_data("dft_freqs.txt", dft_freqs, DFT_SIZE);
 	output_data_cpx("dft_out.txt", dft_output, DFT_SIZE);
 	output_data("dft_abs.txt", dft_abs, DFT_SIZE);
+	output_data_cpx("inv_dft.txt", inv_dft_output, DFT_SIZE);
 
 	vector_delete_cpx(signal_example);
 	vector_delete_cpx(dft_output);
