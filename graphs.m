@@ -22,8 +22,8 @@ dft_real = dft_cpx(:, 1);
 dft_imag = dft_cpx(:, 2);
 inv_dft_real = inv_dft_cpx(:, 1);
 inv_dft_imag = inv_dft_cpx(:, 2);
-N = length(dft_abs);
-n = [0: 1: N - 1];
+N_DFT = length(dft_abs);
+n_signal = [0: 1: length(sig_in_real) - 1];
 
 lower_x_tick = min(dft_frq);
 step_x_tick = dft_frq(2) - dft_frq(1);
@@ -31,8 +31,7 @@ upper_x_tick = max(dft_frq);
 
 dft_fig = figure();
 subplot(2, 1, 1);
-stem(dft_frq, dft_abs / (N / 2), 'filled', 'linewidth', 2);
-set(gca, 'xtick', [lower_x_tick: 2*step_x_tick: upper_x_tick]);
+stem(dft_frq, dft_abs / (N_DFT / 2), 'filled', 'linewidth', 2);
 set(gca, 'FontSize', 8);
 hold on;
 title('DFT Magnitude', 'fontsize', 12);
@@ -41,7 +40,6 @@ hold off;
 
 subplot(2, 1, 2);
 stem(dft_frq, dft_real, 'filled', 'linewidth', 2);
-set(gca, 'xtick', [lower_x_tick: 2*step_x_tick: upper_x_tick]);
 set(gca, 'FontSize', 8);
 hold on;
 stem(dft_frq, dft_imag, 'filled', 'linewidth', 2);
@@ -52,18 +50,18 @@ hold off;
 
 inv_dft_fig = figure();
 subplot(2, 1, 1);
-stem(n, sig_in_real, 'filled', 'linewidth', 2);
+stem(n_signal, sig_in_real, 'filled', 'linewidth', 2);
 hold on;
-stem(n, sig_in_imag, 'filled', 'linewidth', 2);
+stem(n_signal, sig_in_imag, 'filled', 'linewidth', 2);
 title('Input Signal in Complex Form', 'fontsize', 12);
 legend({'Real part', 'Imaginary part'}, 'fontsize', 10);
 grid on;
 hold off;
 
 subplot(2, 1, 2);
-stem(n, inv_dft_real, 'filled', 'linewidth', 2);
+stem(n_signal, inv_dft_real, 'filled', 'linewidth', 2);
 hold on;
-stem(n, inv_dft_imag, 'filled', 'linewidth', 2);
+stem(n_signal, inv_dft_imag, 'filled', 'linewidth', 2);
 title('Inverse DFT in Complex Form', 'fontsize', 12);
 legend({'Real part', 'Imaginary part'}, 'fontsize', 10);
 grid on;
