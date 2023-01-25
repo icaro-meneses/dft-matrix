@@ -24,8 +24,8 @@
 #include "matrix_dft.h"
 #include "out_file.h"
 
-#define SIG_SIZE 128
-#define DFT_SIZE 64
+#define SIG_SIZE 2048
+#define DFT_SIZE 4096
 
 int
 main(void)
@@ -41,7 +41,7 @@ main(void)
 	float sample_period	   = 1.0f / sample_frequency;
 
 	signal_example		   = vector_create_cpx(SIG_SIZE);
-	dft_freqs			   = vector_create(SIG_SIZE);
+	dft_freqs			   = vector_create(DFT_SIZE);
 	get_dft_freqs(dft_freqs, DFT_SIZE, sample_period);
 
 	freq_A = 1000.0f;
