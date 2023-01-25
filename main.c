@@ -58,6 +58,7 @@ main(void)
 	dft_abs		   = abs_dft_calc(dft_output, DFT_SIZE);
 	inv_dft_output = inv_dft_calc(dft_output, DFT_SIZE);
 
+#ifdef DEBUG_MODE
 	printf("Signal Example (Complex Form):\n");
 	print_vector_cpx(signal_example, SIG_SIZE);
 	printf("DFT Freqs:\n");
@@ -68,6 +69,7 @@ main(void)
 	print_vector(dft_abs, DFT_SIZE);
 	printf("\nInverse DFT Output (Complex Form):\n");
 	print_vector_cpx(inv_dft_output, SIG_SIZE);
+#endif
 
 	printf("Outputting the data files...\n");
 	output_data_cpx("input_signal.txt", signal_example, SIG_SIZE);

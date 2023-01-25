@@ -25,10 +25,8 @@ inv_dft_imag = inv_dft_cpx(:, 2);
 N_DFT = length(dft_abs);
 n_signal = [0: 1: length(sig_in_real) - 1];
 
-lower_x_tick = min(dft_frq);
-step_x_tick = dft_frq(2) - dft_frq(1);
-upper_x_tick = max(dft_frq);
-
+%%
+% DFT Plots
 dft_fig = figure();
 subplot(2, 1, 1);
 stem(dft_frq, dft_abs / (N_DFT / 2), 'filled', 'linewidth', 2);
@@ -48,7 +46,9 @@ legend({'Real part', 'Imaginary part'}, 'fontsize', 10);
 grid on;
 hold off;
 
-inv_dft_fig = figure();
+%%
+% Input Signal and IDFT Plots
+inv_dft_fig= figure();
 subplot(2, 1, 1);
 stem(n_signal, sig_in_real, 'filled', 'linewidth', 2);
 hold on;
