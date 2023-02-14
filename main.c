@@ -43,13 +43,8 @@ main(void)
 	float sample_period	   = 1.0f / sample_frequency;
 	int signal_size = (int)ceilf(sample_frequency * total_time);
 
-	printf("signal_size: %d\n", signal_size);
-
-	signal_size = get_size(signal_size);
-	printf("new signal_size: %d\n", signal_size);
-
-	signal_example = vector_create_cpx(signal_size);
-	dft_freqs	   = vector_create(DFT_SIZE);
+	signal_example	= vector_create_cpx(signal_size);
+	dft_freqs		= vector_create(DFT_SIZE);
 	get_dft_freqs(dft_freqs, DFT_SIZE, sample_period);
 
 	freq_A		= 1000.0f;
