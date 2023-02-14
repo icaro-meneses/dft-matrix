@@ -4,18 +4,25 @@ clc;
 
 %%
 % Data reading from file
+data_input_sig_param = fopen('./input_signal_params.txt');
 data_dft_abs = fopen('./dft_abs.txt', 'r');
 data_dft_frq = fopen('./dft_freqs.txt', 'r');
 
 sig_in_cpx = dlmread('./input_signal.txt', ' ', 0, 0);
 dft_cpx = dlmread('./dft_out.txt', ' ', 0, 0);
 inv_dft_cpx = dlmread('./inv_dft.txt', ' ', 0, 0);
+
+input_signal_params = fscanf(data_input_sig_param, "%f\n");
 dft_abs = fscanf(data_dft_abs, "%f\n");
 dft_frq = fscanf(data_dft_frq, "%f\n");
 
+fclose(data_input_sig_param);
 fclose(data_dft_abs);
 fclose(data_dft_frq);
 
+sig_freq = input_signal_params(1);
+sig_sample = input_signal_params(2);
+sig_period = 1 / sig_freq;
 sig_in_real = sig_in_cpx(:, 1);
 sig_in_imag = sig_in_cpx(:, 2);
 dft_real = dft_cpx(:, 1);
@@ -53,6 +60,7 @@ subplot(2, 1, 1);
 stem(n_signal, sig_in_real, 'filled', 'linewidth', 2);
 hold on;
 stem(n_signal, sig_in_imag, 'filled', 'linewidth', 2);
+xlim([0, 4*(sig_sample/sig_freq)]);
 title('Input Signal in Complex Form', 'fontsize', 12);
 legend({'Real part', 'Imaginary part'}, 'fontsize', 10);
 grid on;
@@ -62,6 +70,7 @@ subplot(2, 1, 2);
 stem(n_signal, inv_dft_real, 'filled', 'linewidth', 2);
 hold on;
 stem(n_signal, inv_dft_imag, 'filled', 'linewidth', 2);
+xlim([0, 4*(sig_sample/sig_freq)]);
 title('Inverse DFT in Complex Form', 'fontsize', 12);
 legend({'Real part', 'Imaginary part'}, 'fontsize', 10);
 grid on;

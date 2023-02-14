@@ -19,8 +19,31 @@
 
 #include "matrix_operations.h"
 #include <complex.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+int
+get_size(int num)
+{
+	return (int)powf(2.0f, ceilf(logf((float)num) / logf(2.0f)));
+}
+
+int
+gcd(int num_a, int num_b)
+{
+	int aux;
+
+	while (num_b != 0)
+	{
+		aux	  = num_a % num_b;
+
+		num_a = num_b;
+		num_b = aux;
+	}
+
+	return num_a;
+}
 
 float*
 vector_create(const int size_N)

@@ -23,6 +23,26 @@
 
 #include <complex.h>
 
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  get_size
+ *  Description:  Determines the size of a signal to power
+ *				  of 2.
+ * =================================================================
+ */
+int
+get_size(int num);
+
+/*
+ * ===  FUNCTION  ==================================================
+ *         Name:  gcd
+ *  Description:  Determines the Greater Common Divisor
+ *				  between two integers.
+ * =================================================================
+ */
+int
+gcd(int num_a, int num_b);
+
 float*
 vector_create(const int size_N);
 
