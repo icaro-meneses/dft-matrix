@@ -57,7 +57,7 @@ $ make debug
 
 com um sinal x(t) descrito por:
 
-$$x(t) = \sin(2 \pi 1000 \, t) + 0.5 \cdot \sin(2 \pi 2000 \, t + \frac{3 \pi}{4})$$
+$$x(t) = \sin(2 \pi 1000 t) + 0.5 \cdot \sin(2 \pi 2000 t + \frac{3 \pi}{4})$$
 
 o resultado da operação de DFT é
 
